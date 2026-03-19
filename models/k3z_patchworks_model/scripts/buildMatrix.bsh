@@ -1,0 +1,15 @@
+/*
+ * These commands will build an input matrix according to the following recipe.
+ */
+
+param2 = GeoRelationalStore.open("../../../output/patchworks_k3z_validated/fragments/fragments.shp");
+
+new ca.spatial.tracks.builder.Process("", // fragment data set name
+  param2, // fragment data set object
+   "C:/Users/hsmith30.stu/Documents/femic-k3z-instance-Recreation2/models/k3z_patchworks_model/tracks", // output folder
+   "C:/Users/hsmith30.stu/Documents/femic-k3z-instance-Recreation2/models/k3z_patchworks_model/yield/forestmodel.xml" // ForestModel XML input
+).execute(false);
+
+/* The TableSpec string for the fragments file is:
+../../../output/patchworks_k3z_validated/fragments/fragments.shp
+*/
