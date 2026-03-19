@@ -1,0 +1,31 @@
+# Runtime/transient artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.tmp
+*.log
+
+# Local environments
+.venv/
+.env
+
+# Common generated caches (keep curated baseline files tracked)
+data/ria_vri_vclr1p_checkpoint*.feather
+data/vdyp_results*.pkl
+data/vdyp_prep*.pkl
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
+
+# Docs build outputs
+docs/_build/
+
+# Patchworks transient outputs/backups
+blocks/
+output/patchworks/
+models/k3z_patchworks_model/patchworksLog.csv
+models/k3z_patchworks_model/tracks/accounts_backup_*.csv
+models/k3z_patchworks_model/yield/*_backup_*.xml
+output/patchworks_k3z_validated/*_backup_*.xml

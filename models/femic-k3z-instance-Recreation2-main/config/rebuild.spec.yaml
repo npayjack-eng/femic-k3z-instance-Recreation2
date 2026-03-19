@@ -1,0 +1,125 @@
+schema_version: "1.0"
+
+instance:
+  case_id: "k3z"
+  instance_root: "."
+
+runtime:
+  run_config: "config/run_profile.k3z.yaml"
+  tipsy_config_dir: "config/tipsy"
+  patchworks_config: "config/patchworks.runtime.windows.yaml"
+  log_dir: "vdyp_io/logs"
+  species_account_policy:
+    required_present:
+      - "product.Yield.managed.PLC"
+      - "product.HarvestedVolume.managed.PLC.CC"
+    expected_absent:
+      - "product.Yield.managed.PL"
+      - "product.HarvestedVolume.managed.PL.CC"
+
+steps:
+  - step_id: "validate_case"
+    kind: "femic_command"
+    command: "femic prep validate-case --run-config config/run_profile.k3z.yaml --tipsy-config-dir config/tipsy"
+    required: true
+    depends_on: []
+    mutable_artifacts: []
+    expected_outputs:
+      - "case preflight success"
+
+  - step_id: "geospatial_preflight"
+    kind: "femic_command"
+    command: "femic prep geospatial-preflight"
+    required: true
+    depends_on:
+      - "validate_case"
+    mutable_artifacts: []
+    expected_outputs:
+      - "geospatial preflight success"
+
+  - step_id: "compile_upstream"
+    kind: "femic_command"
+    command: "femic run --run-config config/run_profile.k3z.yaml"
+    required: true
+    depends_on:
+      - "geospatial_preflight"
+    mutable_artifacts:
+      - "data/*"
+      - "vdyp_io/logs/*"
+    expected_outputs:
+      - "run_manifest-<run_id>.json"
+
+  - step_id: "post_tipsy_bundle"
+    kind: "femic_command"
+    command: "femic tsa post-tipsy --run-config config/run_profile.k3z.yaml --tsa k3z"
+    required: true
+    depends_on:
+      - "compile_upstream"
+    mutable_artifacts:
+      - "data/model_input_bundle/*"
+      - "vdyp_io/logs/*"
+    expected_outputs:
+      - "post-tipsy manifest and bundle tables"
+
+  - step_id: "patchworks_preflight"
+    kind: "femic_command"
+    command: "femic patchworks preflight --config config/patchworks.runtime.windows.yaml"
+    required: true
+    depends_on:
+      - "post_tipsy_bundle"
+    mutable_artifacts: []
+    expected_outputs:
+      - "patchworks preflight success"
+
+  - step_id: "patchworks_build_blocks"
+    kind: "femic_command"
+    command: "femic patchworks build-blocks --config config/patchworks.runtime.windows.yaml --with-topology"
+    required: true
+    depends_on:
+      - "patchworks_preflight"
+    mutable_artifacts:
+      - "models/k3z_patchworks_model/blocks/*"
+    expected_outputs:
+      - "blocks.shp"
+      - "topology_blocks_200r.csv"
+
+  - step_id: "patchworks_matrix_build"
+    kind: "femic_command"
+    command: "femic patchworks matrix-build --config config/patchworks.runtime.windows.yaml"
+    required: true
+    depends_on:
+      - "patchworks_build_blocks"
+    mutable_artifacts:
+      - "models/k3z_patchworks_model/tracks/*"
+      - "vdyp_io/logs/patchworks_matrixbuilder_*"
+    expected_outputs:
+      - "patchworks_matrixbuilder_manifest-<run_id>.json"
+
+invariants:
+  - invariant_id: "managed_area_sanity"
+    severity: "fatal"
+    metric: "managed_area_ha"
+    comparator: "gt"
+    target: 1700
+    remediation: "Recheck IFM assignment logic and source checkpoint artifacts."
+
+  - invariant_id: "block_join_consistency"
+    severity: "fatal"
+    metric: "block_join_mismatch_count"
+    comparator: "eq"
+    target: 0
+    remediation: "Rebuild blocks.shp/topology and verify BLOCK key alignment."
+
+  - invariant_id: "seral_accounts_present"
+    severity: "fatal"
+    metric: "seral_account_count"
+    comparator: "gt"
+    target: 0
+    remediation: "Re-export ForestModel XML and rerun matrix build."
+
+  - invariant_id: "baseline_structure_match"
+    severity: "warn"
+    metric: "baseline_match"
+    comparator: "eq"
+    target: true
+    remediation: "Review structural table diffs and accept only intentional deltas."

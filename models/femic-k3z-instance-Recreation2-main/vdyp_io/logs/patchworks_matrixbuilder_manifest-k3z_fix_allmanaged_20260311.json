@@ -1,0 +1,44 @@
+{
+  "run_id": "k3z_fix_allmanaged_20260311",
+  "timestamp_utc": "2026-03-11T18:25:13.251331+00:00",
+  "interactive": false,
+  "command": [
+    "C:\\Program Files\\Eclipse Adoptium\\jdk-8.0.472.8-hotspot\\bin\\java.EXE",
+    "-Djava.library.path=C:\\Program Files\\Spatial Planning Systems\\Patchworks\\lib",
+    "-jar",
+    "patchworks.jar",
+    "ca.spatial.tracks.builder.Process",
+    "C:\\Users\\gep\\projects\\wbi_ria_yield\\external\\femic-k3z-instance\\output\\patchworks_k3z_validated\\fragments\\fragments.dbf",
+    "C:\\Users\\gep\\projects\\wbi_ria_yield\\external\\femic-k3z-instance\\models\\k3z_patchworks_model\\tracks",
+    "C:\\Users\\gep\\projects\\wbi_ria_yield\\external\\femic-k3z-instance\\output\\patchworks_k3z_validated\\forestmodel.xml"
+  ],
+  "command_string": "'C:\\Program Files\\Eclipse Adoptium\\jdk-8.0.472.8-hotspot\\bin\\java.EXE' '-Djava.library.path=C:\\Program Files\\Spatial Planning Systems\\Patchworks\\lib' -jar patchworks.jar ca.spatial.tracks.builder.Process 'C:\\Users\\gep\\projects\\wbi_ria_yield\\external\\femic-k3z-instance\\output\\patchworks_k3z_validated\\fragments\\fragments.dbf' 'C:\\Users\\gep\\projects\\wbi_ria_yield\\external\\femic-k3z-instance\\models\\k3z_patchworks_model\\tracks' 'C:\\Users\\gep\\projects\\wbi_ria_yield\\external\\femic-k3z-instance\\output\\patchworks_k3z_validated\\forestmodel.xml'",
+  "raw_returncode": 75764843,
+  "returncode": 0,
+  "runtime": {
+    "launcher_executable": "C:\\Program Files\\Eclipse Adoptium\\jdk-8.0.472.8-hotspot\\bin\\java.EXE",
+    "host_mode": "windows",
+    "jar_path": "C:\\Program Files\\Spatial Planning Systems\\Patchworks\\patchworks.jar",
+    "license_env": "SPS_LICENSE_SERVER",
+    "license_value": "sps_user@auth.spatial.ca",
+    "spshome": "C:\\Program Files\\Spatial Planning Systems\\Patchworks",
+    "use_xvfb": false,
+    "wine_prefix": null
+  },
+  "inputs": {
+    "fragments_path": "C:\\Users\\gep\\projects\\wbi_ria_yield\\external\\femic-k3z-instance\\output\\patchworks_k3z_validated\\fragments\\fragments.dbf",
+    "matrix_output_dir": "C:\\Users\\gep\\projects\\wbi_ria_yield\\external\\femic-k3z-instance\\models\\k3z_patchworks_model\\tracks",
+    "forestmodel_xml_path": "C:\\Users\\gep\\projects\\wbi_ria_yield\\external\\femic-k3z-instance\\output\\patchworks_k3z_validated\\forestmodel.xml"
+  },
+  "accounts_sync": {
+    "status": "synced",
+    "protoaccounts_path": "C:\\Users\\gep\\projects\\wbi_ria_yield\\external\\femic-k3z-instance\\models\\k3z_patchworks_model\\tracks\\protoaccounts.csv",
+    "accounts_path": "C:\\Users\\gep\\projects\\wbi_ria_yield\\external\\femic-k3z-instance\\models\\k3z_patchworks_model\\tracks\\accounts.csv",
+    "backup_path": "C:\\Users\\gep\\projects\\wbi_ria_yield\\external\\femic-k3z-instance\\models\\k3z_patchworks_model\\tracks\\accounts_backup_20260311_182513.csv"
+  },
+  "logs": {
+    "stdout": "C:\\Users\\gep\\projects\\wbi_ria_yield\\external\\femic-k3z-instance\\vdyp_io\\logs\\patchworks_matrixbuilder_stdout-k3z_fix_allmanaged_20260311.log",
+    "stderr": "C:\\Users\\gep\\projects\\wbi_ria_yield\\external\\femic-k3z-instance\\vdyp_io\\logs\\patchworks_matrixbuilder_stderr-k3z_fix_allmanaged_20260311.log"
+  },
+  "failures": []
+}

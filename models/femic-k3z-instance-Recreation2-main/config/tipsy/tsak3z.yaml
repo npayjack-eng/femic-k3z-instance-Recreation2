@@ -1,0 +1,200 @@
+schema_version: 1
+tsa_code: "k3z"
+
+metadata:
+  source_tsr:
+    - title: "North Island Community Forest FSP context"
+      year: 2020
+      url: "data/bc/cfa/k3z/NICF-Forest-Stewardship-Plan-2020.pdf"
+      notes: "FSP identifies stocking standards in Appendix B."
+    - title: "North Island Community Forest LP FSP Appendices"
+      year: 2020
+      url: "data/bc/cfa/k3z/NICF-LP-Forest-Stewardship-Plan-Appendices-2020.pdf"
+      notes: "Appendix B (pages 4-6): CWH target/min stocking and species guidance."
+  author: "codex-provisional"
+  created_utc: "2026-03-04T00:00:00Z"
+  notes: "FSP-informed provisional K3Z rules; refine with block-level site-series mapping."
+
+species_code_overrides:
+  SX: SW
+  DR: FD
+
+siteprod_si_fallback_by_species:
+  DR: 18.0
+
+defaults:
+  e:
+    OAF2: 0.95
+    FIZ: "I"
+    Regen_Method: "P"
+    Proportion: 1
+    SPP_2: null
+    SPP_3: null
+    SPP_4: null
+    SPP_5: null
+    PCT_2: null
+    PCT_3: null
+    PCT_4: null
+    PCT_5: null
+    GW_1: null
+    GW_2: null
+    GW_3: null
+    GW_4: null
+    GW_5: null
+    GW_age_1: null
+    GW_age_2: null
+    GW_age_3: null
+    GW_age_4: null
+    GW_age_5: null
+  f:
+    OAF2: 0.95
+    FIZ: "I"
+    Regen_Method: "P"
+    Proportion: 1
+    SPP_2: null
+    SPP_3: null
+    SPP_4: null
+    SPP_5: null
+    PCT_2: null
+    PCT_3: null
+    PCT_4: null
+    PCT_5: null
+    GW_1: null
+    GW_2: null
+    GW_3: null
+    GW_4: null
+    GW_5: null
+    GW_age_1: null
+    GW_age_2: null
+    GW_age_3: null
+    GW_age_4: null
+    GW_age_5: null
+
+rules:
+  - id: "k3z_cwh_cedar_pathway"
+    when:
+      bec_in: ["CWH"]
+      leading_species_in: ["C", "CW", "YC"]
+    assign:
+      e:
+        Regen_Delay: 2
+        Density: 900
+        Util_DBH_cm: 12.5
+        SPP_1: "CW"
+        PCT_1: 60
+        SPP_2: "HW"
+        PCT_2: 25
+        SPP_3: "YC"
+        PCT_3: 15
+      f:
+        Regen_Delay: 2
+        Density: 900
+        Util_DBH_cm: 12.5
+        SPP_1: "CW"
+        PCT_1: 60
+        SPP_2: "HW"
+        PCT_2: 25
+        SPP_3: "YC"
+        PCT_3: 15
+
+  - id: "k3z_cwh_hemlock_pathway"
+    when:
+      bec_in: ["CWH"]
+      leading_species_in: ["HM", "HW", "HWI"]
+    assign:
+      e:
+        Regen_Delay: 2
+        Density: 900
+        Util_DBH_cm: 12.5
+        SPP_1: "HW"
+        PCT_1: 70
+        SPP_2: "CW"
+        PCT_2: 20
+        SPP_3: "FD"
+        PCT_3: 10
+      f:
+        Regen_Delay: 2
+        Density: 900
+        Util_DBH_cm: 12.5
+        SPP_1: "HW"
+        PCT_1: 70
+        SPP_2: "CW"
+        PCT_2: 20
+        SPP_3: "FD"
+        PCT_3: 10
+
+  - id: "k3z_cwh_douglasfir_pathway"
+    when:
+      bec_in: ["CWH"]
+      leading_species_in: ["F", "FD", "FDC", "FDI"]
+    assign:
+      e:
+        Regen_Delay: 2
+        Density: 900
+        Util_DBH_cm: 12.5
+        SPP_1: "FD"
+        PCT_1: 60
+        SPP_2: "HW"
+        PCT_2: 25
+        SPP_3: "CW"
+        PCT_3: 15
+      f:
+        Regen_Delay: 2
+        Density: 900
+        Util_DBH_cm: 12.5
+        SPP_1: "FD"
+        PCT_1: 60
+        SPP_2: "HW"
+        PCT_2: 25
+        SPP_3: "CW"
+        PCT_3: 15
+
+  - id: "k3z_cwh_spruce_pathway"
+    when:
+      bec_in: ["CWH"]
+      leading_species_in: ["S", "SB", "SE", "SN", "SS", "SW", "SX", "SXE", "SXL", "SXW"]
+    assign:
+      e:
+        Regen_Delay: 2
+        Density: 900
+        Util_DBH_cm: 12.5
+        SPP_1: "HW"
+        PCT_1: 45
+        SPP_2: "CW"
+        PCT_2: 30
+        SPP_3: "SS"
+        PCT_3: 25
+      f:
+        Regen_Delay: 2
+        Density: 900
+        Util_DBH_cm: 12.5
+        SPP_1: "HW"
+        PCT_1: 45
+        SPP_2: "CW"
+        PCT_2: 30
+        SPP_3: "SS"
+        PCT_3: 25
+
+  - id: "k3z_cwh_fsp_fallback"
+    when: {}
+    assign:
+      e:
+        Regen_Delay: 2
+        Density: 900
+        Util_DBH_cm: 12.5
+        SPP_1: "$leading_species_tipsy"
+        PCT_1: 70
+        SPP_2: "HW"
+        PCT_2: 20
+        SPP_3: "CW"
+        PCT_3: 10
+      f:
+        Regen_Delay: 2
+        Density: 900
+        Util_DBH_cm: 12.5
+        SPP_1: "$leading_species_tipsy"
+        PCT_1: 70
+        SPP_2: "HW"
+        PCT_2: 20
+        SPP_3: "CW"
+        PCT_3: 10
